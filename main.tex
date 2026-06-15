@@ -1,422 +1,400 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
 
-\documentclass[11pt,a4paper]{article}
-
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
 \usepackage{graphicx}
-\usepackage{geometry}
-\usepackage[hidelinks]{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{float}
-\usepackage{cite}
-\usepackage{color}
-\usepackage{xcolor}
-\usepackage{array}
 \usepackage{tabularx}
 \usepackage{multirow}
 
-\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
 
-\title{\textbf{Financial Computing Power Network: A Comprehensive Study on Next-Generation IT Infrastructure Layout Optimization for ICBC}}
-\author{Pengyu Wang \and Hengzhou Duan}
-\date{}
+\cvprfinalcopy
+
+\def\cvprPaperID{****}
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+\ifcvprfinal\pagestyle{empty}\fi
 
 \begin{document}
 
+%%%%%%%%% TITLE
+\title{Financial Computing Power Network: A Study on Next-Generation IT Infrastructure Layout Optimization for ICBC}
+
+\author{Xiaoquan Zhi\\
+Student\\
+Tianjin Universtiy\\
+Tianjin
+\and
+Jianing Zhao\\
+Student\\
+Tianjin Universtiy\\
+Tianjin
+\and
+Yihan Wang\\
+Student\\
+Tianjin Universtiy\\
+Tianjin
+\and
+Pengyu Wang\\
+Student\\
+Tianjin Universtiy\\
+Tianjin
+}
+
 \maketitle
 
+%%%%%%%%% ABSTRACT
 \begin{abstract}
-As the global digital economy deepens at an unprecedented pace, data has unequivocally become a core factor of production in the banking industry, driving profound transformations in both business operations and management models. As a leading global financial institution, the Industrial and Commercial Bank of China (ICBC) is actively advancing into the ``Digital 2.0'' phase, a transformation driven by the dual wheels of advanced technology and massive data. Against this complex backdrop, traditional centralized IT infrastructure models are increasingly struggling to meet the stringent demands of modern financial services, particularly in terms of latency, cost-efficiency, data sovereignty, and the deployment of intelligent applications. This paper provides an extensive and critical review of the evolution of banking IT infrastructure, tracing its trajectory from the early mainframe era through the distributed client/server period, into the internet data centralization phase, and finally to the current cloud and mobile-first era. We identify the fundamental physical and economic bottlenecks of the purely centralized cloud architecture when addressing ubiquitous, real-time, and AI-driven financial demands.
-
-Building upon this analysis, we propose a forward-looking, novel information infrastructure paradigm: the \textbf{Financial Computing Power Network (F-CPN)}. The F-CPN aims to seamlessly integrate and intelligently orchestrate distributed computing resources across a three-tiered architecture encompassing the central cloud, the financial edge, and intelligent end-devices. The core contribution of this work focuses on the pivotal scientific problems inherent in F-CPN layout optimization---specifically, resource allocation and total cost control. We abstract these complex business challenges into two major classes of mathematically rigorous combinatorial optimization models: (1) a Maximal Covering Location Problem (MCLP) model designed to maximize strategic demand coverage under strict capital budget constraints, and (2) a Capacitated Facility Location Problem (CFLP) model aimed at minimizing the Total Cost of Ownership (TCO), including both CapEx and OpEx, while satisfying all service level agreements.
-
-Given the inherent NP-Hard nature and the astronomical combinatorial complexity of these large-scale optimization problems, this paper extensively explores cutting-edge solution methodologies. We critically evaluate the limitations of classical exact solvers and metaheuristics when applied to networks of ICBC's scale. Furthermore, we provide a deep dive into the potential of quantum computing, specifically quantum annealing and the Quadratic Unconstrained Binary Optimization (QUBO) framework, as a disruptive solution paradigm capable of overcoming classical computational bottlenecks via quantum tunneling. Through comprehensive experimental simulations and scenario analyses, we demonstrate the economic and operational superiority of the F-CPN model over traditional architectures. Ultimately, this research provides a solid theoretical foundation, a robust mathematical framework, and a forward-thinking technological roadmap for the scientific planning and strategic deployment of ICBC's next-generation IT infrastructure, positioning the institution at the forefront of the impending quantum-financial revolution.
-
-\textbf{Keywords:} FinTech; Computing Power Network (CPN); Combinatorial Optimization; Quantum Computing; Digital Transformation in Banking; Edge Computing; Facility Location Problem
+As the digital economy deepens, data has become a core factor of production in the banking industry, driving profound transformations in business and management models. As an industry leader, the Industrial and Commercial Bank of China (ICBC) is actively advancing into the "Digital 2.0" phase, driven by the dual wheels of technology and data. Against this backdrop, traditional IT infrastructure models are struggling to meet the stringent demands of financial services in terms of cost, latency, efficiency, and compliance. This paper first reviews the evolution of banking IT infrastructure from mainframes to cloud computing, identifying the bottlenecks of the current centralized cloud architecture in addressing new, ubiquitous, real-time, and intelligent financial demands. Building on this, we propose a forward-looking novel information infrastructure: the Financial Computing Power Network (F-CPN). This network aims to integrate and intelligently orchestrate distributed computing resources across the cloud, edge, and end-devices. The core of this work focuses on the key scientific problems in F-CPN layout optimization---resource allocation and cost control---abstracting them into two major classes of combinatorial optimization models: (1) a model for maximizing demand coverage under budget constraints, and (2) a model for minimizing total deployment costs while satisfying all demand. Given the computational complexity of such NP-Hard problems, this paper further explores the potential of quantum computing as a disruptive solution paradigm. The goal is to provide a solid theoretical basis and a feasible practical methodology for the scientific planning and forward-thinking technological layout of ICBC's next-generation IT infrastructure.
 \end{abstract}
 
+\textbf{Keywords} FinTech; Computing Power Network; Combinatorial Optimization; Quantum Computing; Digital Transformation in Banking
+
+%%%%%%%%% BODY TEXT
 \section{Introduction}
 
-\subsection{The Imperative for IT Infrastructure Evolution in Modern Banking}
-The symbiotic relationship between financial services and information technology has been a defining feature of the modern global economy. Throughout its history, banking IT infrastructure has served as the central nervous system of the industry, dictating the pace of product innovation, shaping the nature of customer interactions, and defining the very boundaries of operational capabilities. The contemporary imperative for continuous, deep digital transformation, as extensively documented in recent financial technology literature \cite{Firat2023}, compels a critical and ongoing examination of this infrastructure's evolutionary trajectory. This evolution is not merely a chronological story of technological replacement; rather, it is a reflection of a profound organizational principle often summarized by Conway's Law: an organization's IT architecture inevitably mirrors its underlying business logic, communication structures, and strategic priorities \cite{Ross2019}. The historical journey from highly centralized, product-centric banking models to today's highly dynamic, customer-centric, and ecosystem-driven financial landscape can be directly mapped onto the four major stages of its underlying technology stack.
+\subsection{A Review of Banking IT Infrastructure Evolution and Its Bottlenecks}
 
-Figure~\ref{fig:evolution} provides a visual summary of this four-stage evolutionary trajectory, highlighting the key technologies and trade-offs at each stage.
+The symbiotic relationship between financial services and information technology has been a defining feature of the modern economy. Throughout its history, banking IT infrastructure has served as the central nervous system of the industry, dictating the pace of innovation, shaping customer interactions, and defining the very boundaries of business operations. The imperative for continuous digital transformation, as extensively documented in recent literature \cite{firat2023future}, compels a critical examination of this infrastructure's evolutionary trajectory. This evolution is not merely a story of technological replacement but a reflection of a profound principle often summarized by Conway's Law: an organization's IT architecture inevitably mirrors its business and communication structure. The journey from highly centralized, product-centric models to today's customer-centric, ecosystem-driven landscape is directly mapped onto the four major stages of its underlying technology stack.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{fig1_evolution_timeline.pdf}
-    \caption{Evolution of Banking IT Infrastructure across four major stages: from the Mainframe Era (1960s--1980s) through the Client/Server Era (1990s) and Internet Data Centralization (2000s--2010s) to the current Cloud \& Mobile-First Era. Each stage introduced new capabilities while also creating new architectural challenges.}
-    \label{fig:evolution}
-\end{figure}
+\begin{figure*}[htbp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{fig1_evolution_timeline.pdf}
+\end{center}
+   \caption{Evolution of Banking IT Infrastructure}
+\label{fig:evolution}
+\end{figure*}
 
-\subsubsection{Stage 1: The Mainframe Era---The Fortress of Transactional Integrity (1960s-1980s)}
-The dawn of banking automation was unequivocally dominated by the mainframe computer, epitomized by robust platforms like the IBM System/360. This architecture was a direct, physical reflection of the bank's strict hierarchical structure and its focus on ledger management. Its core, unyielding purpose was to serve as the ultimate \textbf{System of Record}, providing unparalleled reliability, consistency, and security for high-volume Online Transaction Processing (OLTP). Technologies such as COBOL for complex business logic and CICS for transaction management created a robust but fundamentally monolithic fortress. However, this immense strength was also its critical weakness. These proprietary, vertically integrated systems resulted in an extremely high Total Cost of Ownership (TCO) and created what can be termed ``architectural rigidity''. Business processes were hard-coded into the systems, data was locked within proprietary VSAM files, and any structural change required long, risky, and highly expensive development cycles. The mainframe's ``information silo'' nature was not just a technical artifact but a significant barrier to business agility, making it increasingly ill-suited to respond to the burgeoning market demand for diversified and rapidly changing financial products in the late 20th century.
-
-\subsubsection{Stage 2: The Distributed Client/Server Era---A Push for Agility and its Perils (1990s)}
-The rapid proliferation of personal computers and local area networks (LANs), driven by the relentless pace of Moore's Law, triggered a fundamental paradigm shift in enterprise computing. Banks eagerly embraced the Client/Server architecture in a strategic attempt to escape the mainframe's rigidity and prohibitive costs. Processing power was deliberately decentralized: presentation logic moved to client-side graphical user interfaces (GUIs), while business logic was handled by more affordable, departmental-level servers running on open systems like UNIX, coupled with relational databases (e.g., Oracle, Sybase). This shift successfully empowered individual business units, accelerated departmental innovation, and significantly improved the internal user experience. However, this newfound flexibility came at a steep, often unforeseen price. The rapid, largely uncoordinated adoption of these systems led to a highly fragmented landscape characterized by ``islands of automation.'' The lack of robust enterprise middleware and standardized data models resulted in severe data integrity and consistency challenges, effectively creating new, more numerous, and deeply entrenched ``data silos''. Integrating these heterogeneous systems to achieve a unified view of the customer became a complex, brittle, and error-prone process, ultimately undermining the strategic goal of customer-centricity.
-
-\subsubsection{Stage 3: The Internet Data Centralization Era---Rebuilding the Core for Omnichannel (2000s-2010s)}
-The explosive, global growth of internet and subsequently mobile banking created an urgent, overriding business driver: the absolute necessity for a seamless, consistent \textbf{omnichannel experience}. A modern customer expected to access the exact same data, services, and transaction capabilities whether they were standing at a physical branch, logging into a website, or using a smartphone app. This demand forced a strategic reversal of the fragmentation that characterized the previous era. The banking industry undertook massive, multi-year ``data centralization'' projects, often building upon complex N-tier architectures and nascent Service-Oriented Architectures (SOA) using platforms like J2EE and .NET. The primary goal was to re-establish a ``single source of truth'' by physically and logically consolidating disparate departmental databases and application logic back into massive, enterprise-level data centers. This recentralization was largely successful in providing a unified customer view and enabling centralized, enterprise-wide risk management, marking a significant and necessary milestone in the digital journey of banking. Yet, in doing so, it inadvertently created a new form of centralized dependency, setting the stage for the next wave of architectural disruption.
-
-\subsubsection{Stage 4: The Cloud \& Mobile-First Era---The Apex of Centralization and Its Emerging Fractures (2010s-Present)}
-Cloud computing, with its compelling promise of on-demand elasticity, utility-based pricing models (shifting from CapEx to OpEx), and unprecedented agility enabled through DevOps practices, rapidly became the de facto standard for all new financial application development. Banks invested heavily in building powerful private clouds and cautiously adopted hybrid cloud models, leveraging virtualization, containerization (Docker, Kubernetes), and microservices architectures to dramatically accelerate time-to-market for new features. While this model excels at large-scale, asynchronous data processing and flexible resource allocation, its purely centralized nature has begun to reveal critical, structural fractures when confronted with the extreme demands of a truly ubiquitous, real-time, and highly intelligent ``Digital 2.0'' world.
-
-Table~\ref{tab:stage_comparison} provides a structured comparison of the four evolutionary stages across key dimensions.
-
-\begin{table}[H]
-\centering
-\caption{Comparative Analysis of Banking IT Infrastructure Evolution Stages}
-\label{tab:stage_comparison}
-\renewcommand{\arraystretch}{1.35}
-\begin{tabularx}{\textwidth}{|l|X|X|X|X|}
-\hline
-\textbf{Dimension} & \textbf{Stage 1: Mainframe} & \textbf{Stage 2: Client/Server} & \textbf{Stage 3: Internet} & \textbf{Stage 4: Cloud} \\
-\hline
-\textbf{Era} & 1960s--1980s & 1990s & 2000s--2010s & 2010s--Present \\
-\hline
-\textbf{Key Tech} & IBM S/360, COBOL & UNIX, Oracle, GUI & J2EE, SOA, .NET & Docker, K8s, DevOps \\
-\hline
-\textbf{Architecture} & Centralized, Monolithic & Distributed, Departmental & Re-centralized, N-tier & Hybrid Cloud, Microservices \\
-\hline
-\textbf{Primary Goal} & Transactional Integrity & Business Agility & Omnichannel Experience & Elastic Scalability \\
-\hline
-\textbf{Key Strength} & Reliability, Security & Flexibility, Low Cost & Unified Customer View & On-demand Resources \\
-\hline
-\textbf{Key Weakness} & High TCO, Rigidity & Data Silos, Fragmentation & Centralized Dependency & Latency, Data Gravity \\
-\hline
-\end{tabularx}
-\end{table}
-
-\subsection{The Four Fundamental Bottlenecks of Centralized Cloud Architecture}
-The fractures in the current cloud-centric model are not minor operational issues but fundamental physical and economic bottlenecks that threaten to stall the next phase of financial innovation:
+\begin{itemize}
+    \item \textbf{Stage 1: The Mainframe Era---The Fortress of Transactional Integrity (1960s-1980s).} The dawn of banking automation was dominated by the mainframe, epitomized by platforms like the IBM System/360. This architecture was a direct reflection of the bank's hierarchical structure. Its core purpose was to be the ultimate \textbf{System of Record}, providing unparalleled reliability, consistency, and security for high-volume Online Transaction Processing (OLTP). Technologies like COBOL for business logic and CICS for transaction management created a robust but monolithic fortress. However, this strength was also its critical weakness. These proprietary, vertically integrated systems resulted in an extremely high Total Cost of Ownership (TCO) and created what can be termed "architectural rigidity" \cite{ross2019designed}. Business processes were hard-coded, data was locked within VSAM files, and any change required long, risky, and expensive development cycles. The mainframe's "information silo" nature was not just a technical artifact but a barrier to business agility, making it ill-suited to respond to the burgeoning demand for diversified financial products.
+    
+    \item \textbf{Stage 2: The Distributed Client/Server Era---A Push for Agility and its Perils (1990s).} The proliferation of personal computers and local area networks (LANs), driven by Moore's Law, triggered a paradigm shift. Banks embraced the Client/Server architecture to escape the mainframe's rigidity and cost. Processing was decentralized: presentation logic moved to client-side graphical user interfaces (GUIs), while business logic was handled by more affordable departmental servers running on open systems like UNIX with relational databases (e.g., Oracle, Sybase). This shift successfully empowered business units and improved the user experience. However, this newfound flexibility came at a steep price. The rapid, uncoordinated adoption led to a fragmented landscape of "islands of automation." The lack of robust middleware and standardized data models resulted in severe data integrity and consistency challenges, effectively creating new, more numerous "data silos" \cite{ometov2022survey}. Integrating these heterogeneous systems was a complex and brittle process, undermining the goal of a unified view of the customer.
+    
+    \item \textbf{Stage 3: The Internet Data Centralization Era---Rebuilding the Core for Omnichannel (2000s-2010s).} The explosive growth of internet and mobile banking created an urgent business driver: the need for a seamless, consistent \textbf{omnichannel experience}. A customer expected the same data and services whether they were at a branch, on a website, or using a mobile app. This forced a strategic reversal of the fragmentation of the previous era. The industry undertook massive "data centralization" projects, often building upon N-tier architectures and nascent Service-Oriented Architectures (SOA) using platforms like J2EE and .NET. The goal was to re-establish a "single source of truth" by consolidating disparate databases and application logic back into enterprise-level data centers. This recentralization was successful in providing a unified customer view and enabling centralized risk management, marking a significant milestone in the digital journey of banking \cite{firat2023future}. Yet, in doing so, it created a new form of centralized dependency, setting the stage for the next wave of disruption.
+    
+    \item \textbf{Stage 4: The Cloud \& Mobile-First Era---The Apex of Centralization and Its Emerging Fractures (2010s-Present).} Cloud computing, with its promise of on-demand elasticity, utility-based pricing (OpEx vs. CapEx), and unprecedented agility through DevOps, became the de facto standard for new application development. Banks built powerful private clouds and cautiously adopted hybrid models, leveraging virtualization, containers (Docker, Kubernetes), and microservices to accelerate time-to-market. While this model excels at large-scale data processing and flexible resource allocation, its purely centralized nature has revealed critical fractures when confronted with the demands of a truly ubiquitous, real-time, and intelligent "Digital 2.0" world. These are not minor issues but fundamental bottlenecks:
+\end{itemize}
 
 \begin{enumerate}
-    \item \textbf{The Physical Latency Bottleneck:} The speed of light in optical fiber is a non-negotiable physical constraint. For latency-sensitive financial applications, the round-trip time (RTT) from an end-user device to a distant central cloud data center can easily range from 50 to 150 milliseconds, depending on geographical distance and network routing. This latency is entirely unacceptable for next-generation services such as real-time, in-transaction fraud detection, interactive high-definition Video Teller Machine (VTM) sessions, or algorithmic high-frequency trading, all of which demand sub-10 millisecond response times to function effectively.
-    
-    \item \textbf{The Data Gravity and Bandwidth Bottleneck:} The modern digital bank is essentially a massive data factory, generating petabyte-scale streams of unstructured data continuously. This data originates from diverse sources like 4K HD video surveillance in branches, millions of IoT sensors, and extensive natural language chatbot logs. Transporting this deluge of raw, unfiltered data across wide area networks (WAN) to a central cloud for processing is not only economically prohibitive due to exorbitant network bandwidth and cloud ingress/egress costs, but also highly inefficient. The principle of ``data gravity'' dictates that computation should move to where the massive data resides, not the other way around.
-    
-    \item \textbf{The Data Sovereignty and Compliance Bottleneck:} The global regulatory landscape has shifted dramatically with the introduction of a new generation of stringent data protection regulations, such as Europe's GDPR, China's Data Security Law (DSL), and the Personal Information Protection Law (PIPL). These frameworks strictly mandate data sovereignty, imposing rigid rules on the cross-border transfer and physical localization of sensitive personal and financial data. A purely centralized cloud architecture, especially one leveraging public cloud regions that span multiple jurisdictions, presents significant, sometimes insurmountable compliance risks and legal complexities.
-    
-    \item \textbf{The Intelligent Application Bottleneck:} The definitive future of banking services is intelligent, deeply powered by Artificial Intelligence (AI). While the computationally intensive task of AI model \textit{training} is perfectly suited for the massive, centralized power of the cloud, AI \textit{inference}---the real-time application of these models to live data---is most effective when executed at the edge. Deploying inference workloads closer to the user enables immediate, context-aware services like real-time facial recognition for VIP access control, natural language processing for voice commands at an ATM, or proactive customer assistance based on immediate in-branch behavior analysis. Relying on a distant cloud for such inference introduces unacceptable latency, rendering these smart applications sluggish and impractical for real-world deployment.
+    \item \textbf{The Physical Latency Bottleneck:} The speed of light is a non-negotiable physical constraint. For latency-sensitive financial applications, this is a critical barrier. Round-trip times (RTT) to a distant central cloud can easily range from 50 to 150 milliseconds. This is unacceptable for services like real-time fraud detection during a transaction, interactive VTM video sessions, or high-frequency trading, which demand sub-10 millisecond response times.
+    \item \textbf{The Data Gravity and Bandwidth Bottleneck:} The digital bank is a data factory, generating massive, often petabyte-scale, streams of unstructured data from sources like HD video surveillance, IoT sensors in branches, and chatbot logs. Transporting this deluge of raw data to a central cloud for processing is not only economically prohibitive due to network bandwidth and cloud egress costs but also highly inefficient. The principle of "data gravity"---the idea that data is hard to move---dictates that computation should move to the data, not the other way around.
+    \item \textbf{The Data Sovereignty and Compliance Bottleneck:} A new generation of stringent data protection regulations, such as Europe's GDPR and China's own Data Security Law (DSL) and Personal Information Protection Law (PIPL), mandate data sovereignty. These laws impose strict rules on the cross-border transfer and localization of sensitive personal and financial data. A centralized cloud architecture, especially one involving public cloud regions, presents significant compliance risks and complexities, often making it legally impossible to process certain data outside of its geographical origin.
+    \item \textbf{The Intelligent Application Bottleneck:} The future of banking services is intelligent, powered by Artificial Intelligence (AI). While AI model \textit{training} can leverage the massive power of the central cloud, AI \textit{inference}---the real-time application of these models---is most effective at the edge. Deploying inference workloads closer to the user enables immediate, context-aware services like real-time facial recognition for VIP access, natural language processing for voice commands at an ATM, or proactive customer assistance based on in-branch behavior analysis. Relying on the cloud for such inference introduces unacceptable latency and renders these smart applications impractical.
 \end{enumerate}
 
-\subsection{Research Objectives: Architecting and Optimizing the F-CPN}
-The identified bottlenecks of the centralized cloud model are systemic limitations, strongly indicating that the current banking IT architecture is rapidly approaching a critical inflection point. To transcend these physical and regulatory barriers, a fundamental paradigm shift is required. Drawing profound inspiration from the rapidly emerging telecommunications concept of the Computing Power Network (CPN) \cite{Liu2023}, which envisions a nationwide, ubiquitous infrastructure for on-demand, orchestrated computing resources, this paper proposes a domain-specific, highly tailored adaptation for the financial sector: the \textbf{Financial Computing Power Network (F-CPN)}.
+\subsection{Research Objectives: Building and Optimizing the F-CPN}
 
-The overarching vision of the F-CPN is to architect a fluid, highly responsive, three-tiered computational fabric that intelligently orchestrates computing, storage, and network resources across the entire institutional footprint. This spans from massive central cloud data centers to agile edge servers located in regional branches, and extends all the way to the intelligent end-user devices. This transition is not merely a technical hardware upgrade; it is a strategic business imperative designed to create an architecture capable of sustaining digital dominance in the coming decades.
+The identified bottlenecks of the centralized cloud model are not mere incremental challenges but systemic limitations, indicating that the architecture is approaching an inflection point. To transcend these barriers, a paradigm shift is required. Drawing inspiration from the emerging concept of the Computing Power Network (CPN), which envisions a nationwide infrastructure for on-demand, orchestrated computing resources \cite{liu2023computing}, this paper proposes a domain-specific adaptation for the financial sector: the \textbf{Financial Computing Power Network (F-CPN)}.
 
-The core research objective of this comprehensive study is to translate this high-level strategic business vision into a mathematically rigorous, actionable framework. We aim to formalize the highly complex F-CPN layout challenge by developing, analyzing, and solving two fundamental mathematical optimization models:
+The vision of F-CPN is to architect a fluid, three-tiered computational fabric that intelligently orchestrates resources across the entire institutional footprint---from central cloud data centers to edge servers located in branches, and even to the end-user devices. This is not merely a technical reconfiguration; it is a strategic imperative to design a business architecture for sustained digital success \cite{ross2019designed}. The value of this vision is best illustrated through concrete banking scenarios:
+
+\begin{itemize}
+    \item \textbf{Case Study 1: The "Smart Branch" Transformation.} Consider a next-generation bank branch equipped with VTMs (Virtual Teller Machines), biometric authentication, and AI-powered customer analytics. In a traditional cloud model, the high-definition video stream from a VTM session would travel hundreds of kilometers to a central cloud for processing, introducing unacceptable lag. In the F-CPN model, an \textbf{edge server} located within the branch or a regional hub would handle the real-time video encoding/decoding and biometric signature verification. Only the final, structured transaction data would be sent to the \textbf{central cloud's} System of Record. This orchestration drastically reduces latency to a few milliseconds, improves customer experience, and saves enormous network bandwidth costs.
+    \item \textbf{Case Study 2: Real-time Risk Control and Compliance.} Imagine a customer making a large, unusual transaction via their mobile phone. The F-CPN architecture enables a multi-layered fraud detection process. The AI model on the \textbf{end-user device} can perform initial checks on the device's integrity. The request then hits a nearby \textbf{edge server}, which runs a more complex, location-aware risk model that cross-references the transaction against local fraud patterns in real-time. This immediate, localized inference can flag suspicious activity before the transaction request even reaches the central system. Simultaneously, this ensures that sensitive geo-location data is processed locally, adhering to data sovereignty regulations, while the final transaction authorization still occurs on the highly secure \textbf{central cloud}.
+\end{itemize}
+
+These cases reveal a critical insight: the F-CPN's power lies not in its individual components, but in the intelligent synergy between them. However, realizing this vision moves beyond mere technology acquisition. It presents a formidable scientific and economic challenge: \textbf{Where should the edge servers be deployed, and in what capacity, to maximize enterprise value while minimizing total cost of ownership?} This is the problem of \textbf{layout optimization}, a classic large-scale combinatorial optimization problem deeply rooted in the field of Operations Research.
+
+Therefore, the core research objective of this study is to translate this strategic business problem into a mathematically rigorous framework. We aim to formalize the F-CPN layout challenge by developing and analyzing two fundamental optimization models:
 
 \begin{enumerate}
-    \item \textbf{A Maximal Coverage Model under Budget Constraints (MCLP):} From a strategic, near-term investment perspective, a massive institution like ICBC operates with a finite, strictly controlled capital budget for infrastructure upgrades in any given fiscal year. The critical question becomes: given a fixed budget sufficient to deploy a set number of $P$ edge nodes, which specific locations from tens of thousands of candidates will yield the maximum possible service coverage and strategic value?
-    
-    \item \textbf{A Cost-Minimization Model with Full Service Guarantees (CFLP):} From a comprehensive, long-term Total Cost of Ownership (TCO) perspective, the strategic objective shifts. The question evolves to: what is the absolute most economically efficient network blueprint that guarantees satisfaction of stringent Service Level Agreements (SLAs) for all identified business demands across the network? This complex model requires minimizing the total sum of fixed deployment costs (Capital Expenditure - CapEx) and the highly variable, ongoing operational costs of data processing and network transport (Operational Expenditure - OpEx), creating a holistic financial model for the infrastructure.
+    \item \textbf{A Maximal Coverage Model under Budget Constraints:} From a strategic investment perspective, a bank like ICBC operates with a finite budget for infrastructure upgrades. The question becomes: given a fixed budget to deploy a set number of $P$ edge nodes in the upcoming fiscal year, which locations from thousands of potential sites (e.g., branches, regional offices) should be chosen to maximize the coverage of high-value business demand (e.g., high-traffic areas, corporate clients, latency-sensitive services)?
+    \item \textbf{A Cost-Minimization Model with Full Service Guarantees:} From a TCO perspective, the objective shifts. The question is: what is the most economically efficient network blueprint that satisfies the service level agreements (SLAs) for all identified business demands? This requires minimizing the sum of fixed deployment costs (Capital Expenditure - CapEx) and the variable, ongoing operational costs of data processing and transport (Operational Expenditure - OpEx), creating a holistic and sustainable financial model for the infrastructure.
 \end{enumerate}
 
-By rigorously addressing these two interrelated questions, this paper seeks to provide a scientifically grounded, quantitative methodology for the strategic planning of ICBC's next-generation IT infrastructure. We move the discourse from abstract architectural concepts to actionable, data-driven deployment decisions, exploring cutting-edge solution methods, including the disruptive potential of quantum computing, to tackle the inherent computational intractability of these models.
+By addressing these questions, this paper seeks to provide a scientifically grounded methodology for the strategic planning of ICBC's next-generation IT infrastructure, moving from abstract architectural concepts to actionable, data-driven deployment decisions. The exploration of cutting-edge solution methods for these computationally intensive (NP-Hard) problems forms the final pillar of our research.
 
 \section{F-CPN Architecture and Optimization Challenges}
 
 \subsection{F-CPN Conceptual Architecture: A Three-Tiered Computational Fabric}
-The Financial Computing Power Network (F-CPN) is conceptualized not merely as a simple hardware upgrade or a localized network enhancement, but as a holistic, logically unified, and physically highly distributed computational fabric. This three-tiered heterogeneous architecture is meticulously designed to map directly onto the diverse latency, bandwidth, security, and compliance requirements of modern financial services. It aligns closely with established telecommunications paradigms like Multi-access Edge Computing (MEC) \cite{Ometov2022} and the broader, visionary concept of a schedulable, on-demand Computing Power Network. Each tier within this fabric serves a distinct, synergistic purpose, contributing to the overall intelligence and efficiency of the network.
 
-Figure~\ref{fig:architecture} illustrates the three-tier F-CPN architecture and the Unified Intelligent Orchestration Plane that governs resource scheduling across all tiers.
+The Financial Computing Power Network (F-CPN) is conceptualized not as a simple hardware upgrade, but as a holistic, logically unified, and physically distributed computational fabric. This three-tiered heterogeneous architecture is designed to map directly onto the diverse latency, bandwidth, and compliance requirements of modern financial services. It aligns with established paradigms like Multi-access Edge Computing (MEC) \cite{ometov2022survey} and the broader vision of a schedulable, on-demand Computing Power Network \cite{liu2023computing}. Each tier serves a distinct, synergistic purpose:
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{fig2_fcpn_architecture.pdf}
-    \caption{The F-CPN Three-Tier Architecture. Tier 1 (Central Cloud) handles compute-intensive batch and AI training workloads. Tier 2 (Financial Edge) provides real-time AI inference and data pre-processing at branch locations. Tier 3 (Intelligent End-Devices) encompasses the full ecosystem of customer-facing and IoT devices. The Unified Intelligent Orchestration Plane (right) uses SDN/NFV/AI to dynamically schedule workloads across all tiers.}
-    \label{fig:architecture}
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\linewidth]{fig2_fcpn_architecture.pdf}
+\end{center}
+   \caption{F-CPN Conceptual Architecture}
+\label{fig:architecture}
 \end{figure}
 
 \begin{itemize}
-    \item \textbf{Tier 1: The Central Cloud---The Core of Strategic Intelligence and Ultimate Record.} The central cloud remains the gravitational center and the most powerful computational engine of the F-CPN. It functions as the ``central bank'' of computing power and maintains its role as the ultimate System of Record. Its primary role is to handle tasks that are massively compute-intensive, non-latency-sensitive, and require a comprehensive, global view of enterprise data. This includes large-scale overnight batch processing (e.g., end-of-day settlement, interest calculations), enterprise-wide big data analytics, complex risk modeling across millions of accounts, and the computationally demanding training of large AI/ML models (such as Large Language Models for customer service). The technology stack here comprises hyper-scale Kubernetes clusters, massively distributed databases, expansive data lakes, and powerful GPU farms. While immensely powerful, its inherent physical distance from the end-user makes it fundamentally unsuited for real-time, interactive workloads.
-
-    \item \textbf{Tier 2: The Financial Edge---The Vanguard of Real-Time Service Delivery.} The Edge represents the most innovative, critical, and rapidly expanding layer of the F-CPN. It consists of a highly distributed network of smaller-scale, agile servers, acting as ``forward-deployed warehouses'' of compute capacity. These edge nodes are strategically placed in locations characterized by high business value and immense data density, such as major ICBC bank branches, regional data centers, or secure co-location facilities situated close to central business districts. Their primary function is to intercept, process, and respond to workloads that are highly latency-sensitive, data-intensive, or subject to strict local data sovereignty rules. Key responsibilities include:
+    \item \textbf{Tier 1: The Central Cloud---The Core of Strategic Intelligence and Ultimate Record.} The central cloud remains the gravitational center of the F-CPN, functioning as the "central bank" of computing power and the ultimate System of Record. Its role is to handle tasks that are compute-intensive, non-latency-sensitive, and require a global data view. This includes large-scale batch processing (e.g., end-of-day settlement), enterprise-wide data analytics, complex risk modeling, and, crucially, the training of large AI/ML models. The technology stack here comprises hyper-scale Kubernetes clusters, distributed databases, data lakes, and powerful GPU farms. While immensely powerful, its inherent distance from the end-user makes it fundamentally unsuited for real-time interaction.
+    
+    \item \textbf{Tier 2: The Financial Edge---The Vanguard of Real-Time Service Delivery.} The Edge is the most innovative and critical layer of the F-CPN. It consists of a distributed network of smaller-scale servers, acting as "forward-deployed warehouses" of compute. These edge nodes are strategically placed in locations with high business value and data density, such as major bank branches, regional data centers, or co-location facilities close to business districts. Their primary function is to intercept and process workloads that are latency-sensitive, data-intensive, or subject to strict data sovereignty rules. Key responsibilities include:
     \begin{itemize}
-        \item \textbf{Real-time AI Inference:} Executing pre-trained machine learning models for immediate services like sub-second facial recognition for VIP customer identification, natural language voice command processing at smart ATMs, and real-time transaction fraud detection.
-        \item \textbf{Data Pre-processing and Aggregation:} Filtering, cleaning, and aggregating massive raw data streams (e.g., continuous video surveillance feeds) locally, before transmitting only the essential, structured insights or anomalies to the central cloud, thereby drastically reducing network backhaul load and bandwidth costs.
-        \item \textbf{Compliance Gateway:} Acting as a secure local gateway to ensure that highly sensitive customer data is processed entirely within its geographical jurisdiction, satisfying stringent regulations like PIPL without compromising service quality.
+        \item \textbf{Real-time AI Inference:} Executing pre-trained models for immediate services like facial recognition, voice command processing, and real-time fraud detection.
+        \item \textbf{Data Pre-processing and Aggregation:} Filtering, cleaning, and aggregating raw data streams (e.g., from video surveillance) before transmitting only the essential, structured insights to the central cloud, thus drastically reducing network load.
+        \item \textbf{Compliance Gateway:} Acting as a local gateway to ensure that sensitive customer data is processed within its geographical jurisdiction, thereby satisfying regulations like PIPL.
     \end{itemize}
-
-    \item \textbf{Tier 3: The Intelligent End-Device---The Point of Initial Perception and Interaction.} The final tier consists of the vast, ubiquitous ecosystem of end-user devices. In the F-CPN paradigm, these are no longer passive ``dumb'' terminals but active, intelligent participants in the computational process. This tier includes everything from customer smartphones and merchant PoS terminals to ATMs and thousands of IoT sensors embedded within a ``smart branch.'' These devices perform initial data capture and are increasingly capable of running lightweight, highly optimized on-device ML models (e.g., TinyML) for tasks like keyword spotting, basic anomaly detection, or biometric pre-validation. They represent the ultimate source of demand and the critical perception layer of the entire F-CPN.
+    Technologically, these nodes leverage lightweight container runtimes (e.g., K3s, MicroK8s), specialized AI inference accelerators, and high-speed local networking.
+    
+    \item \textbf{Tier 3: The Intelligent End-Device---The Point of Initial Perception and Interaction.} The final tier consists of the vast ecosystem of end-user devices, which are no longer passive terminals but active participants in the computational process. This includes everything from customer smartphones and PoS terminals to ATMs and IoT sensors within a "smart branch." These devices perform initial data capture and can run lightweight, on-device ML models for tasks like keyword spotting or basic anomaly detection. They represent the ultimate source of demand and the perception layer of the entire F-CPN.
 \end{itemize}
 
-The true, transformative power of this architecture does not lie merely in the individual tiers, but in the \textbf{Unified Intelligent Orchestration Plane}. This plane acts as the network's ``brain'' or software-defined nervous system. It transcends the physical tiers, providing a single, unified pane of glass for seamless management and control. Utilizing advanced technologies like Software-Defined Networking (SDN) for dynamic, intent-based traffic routing, Network Functions Virtualization (NFV) to deploy network services as agile software, and a sophisticated AI-driven control engine, it performs real-time, optimal workload scheduling. Based on continuous telemetry data regarding network conditions, node utilization, and application-specific SLAs, the orchestrator dynamically decides whether a given workload should be processed instantly on the device, routed to the nearby edge, or sent to the central cloud.
+The true power of this architecture lies in the \textbf{Unified Intelligent Orchestration Plane}. This is the network's "brain" or software-defined nervous system. It transcends the physical tiers, providing a single pane of glass for management and control. Using technologies like Software-Defined Networking (SDN) for dynamic traffic routing, Network Functions Virtualization (NFV) to deploy services as software, and an AI-driven control engine, it performs real-time, optimal scheduling. Based on telemetry data about network conditions, node utilization, and application-specific SLAs, the orchestrator decides dynamically whether a given workload should be processed on the device, at the edge, or in the cloud.
 
 \subsection{Core Optimization Challenge: The Combinatorial Explosion of NP-Hard Problems}
-The architectural blueprint of the F-CPN, while conceptually powerful and necessary, gives rise to a formidable, highly complex strategic challenge: its physical layout optimization. Determining exactly where to deploy these edge resources is not a simple technical configuration task but a large-scale, discrete location-allocation problem. This class of problems falls squarely into the category of \textbf{NP-Hard} mathematics. The ``hardness'' and computational intractability stem directly from the phenomenon of \textbf{combinatorial explosion}.
 
-Consider the operational scale of a financial institution like ICBC. With potentially over 15,000 physical branches and office locations nationwide serving as viable candidate sites for edge nodes, the decision space is astronomically large. For instance, a strategic, budget-constrained plan to deploy just 500 edge servers would require choosing exactly 500 locations out of the 15,000 possibilities. The total number of possible network combinations is given by the binomial coefficient $\binom{15000}{500}$. This number is so vast (on the order of $10^{1340}$) that it far exceeds the estimated number of atoms in the observable universe. A brute-force search to evaluate every combination is not just impractical; it is a fundamental physical impossibility for any classical computer, regardless of its power.
+The architectural blueprint of the F-CPN, while powerful, gives rise to a formidable strategic challenge: its physical layout optimization. This is not a simple technical configuration but a large-scale, discrete location-allocation problem that falls squarely into the category of NP-Hard problems. The "hardness" stems from the phenomenon of \textbf{combinatorial explosion}.
 
-This inherent, inescapable mathematical complexity forces us to abstract the high-level business problem into precise, solvable mathematical formulations. We focus our research on two canonical yet highly relevant Operations Research models that represent two sides of the same strategic coin: the Maximal Covering Location Problem (MCLP) for value maximization, and the Capacitated Facility Location Problem (CFLP) for cost minimization.
+For a financial institution on the scale of ICBC, with potentially over 15,000 physical branches and office locations serving as candidate sites for edge nodes, the decision space is astronomically large. For instance, a strategic plan to deploy just 500 edge servers would require choosing 500 locations out of 15,000. The number of possible combinations is given by the binomial coefficient $\binom{15000}{500}$, a number so vast (on the order of $10^{1340}$) that it exceeds the estimated number of atoms in the observable universe. A brute-force search is not just impractical; it is a physical impossibility for any classical computer.
+
+This inherent complexity forces us to abstract the business problem into precise mathematical formulations. We focus on two canonical yet highly relevant models that represent two sides of the same strategic coin:
+
+\begin{itemize}
+    \item \textbf{Challenge 1: Maximal Covering Location Problem (MCLP) --- The Strategic Value Maximization.} This model addresses the business question: "Given a fixed annual budget for digital infrastructure, where do we invest to achieve the maximum strategic impact?" It formalizes the problem of a phased, budget-constrained rollout. The objective is to select a predetermined number of $P$ edge locations to maximize the total volume or value of covered business demand. "Demand" here is a weighted metric that could represent transaction volume, number of high-value customers, or the density of latency-sensitive applications. Solving the MCLP provides decision-makers with a data-driven priority list for deployment, ensuring that every dollar invested yields the highest possible return in service quality and market coverage.
+    
+    \item \textbf{Challenge 2: Capacitated Facility Location Problem (CFLP) --- The Total Economic Efficiency.} This model tackles the holistic, long-term economic question: "What is the most cost-effective network design that guarantees service quality for all our business needs?" Unlike the MCLP, the CFLP does not fix the number of facilities. Instead, it seeks to satisfy all demands while minimizing the total cost of ownership (TCO). This TCO is a composite of the fixed Capital Expenditures (CapEx) for deploying servers and the variable Operational Expenditures (OpEx) associated with processing and data transport. The model must respect the finite processing capacity of each potential edge server. The solution to the CFLP provides the optimal, long-term blueprint for the entire network, balancing fixed costs against operational efficiency. This problem formulation is a subject of active research, with novel computational approaches constantly being explored \cite{d2023quantum}.
+\end{itemize}
+
+\begin{figure*}[htbp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{fig3_optimization_challenge.pdf}
+\end{center}
+   \caption{F-CPN Optimization Challenge Illustration}
+\label{fig:challenge}
+\end{figure*}
+
+The NP-Hard nature of these formulations means that for problems of realistic scale, finding a provably optimal solution with classical exact solvers (like Gurobi or CPLEX) can take an unacceptably long time or require prohibitive amounts of memory. This computational bottleneck is the primary motivation for exploring alternative, potentially disruptive solution paradigms, such as quantum computing.
 
 \section{Combinatorial Optimization Modeling for F-CPN Layout}
 
-To effectively translate the strategic F-CPN layout challenges into a rigorously solvable form, we employ the precise language of mathematical optimization. This section formalizes the two core business problems into two distinct Mixed Integer Linear Programming (MILP) models. These models provide a structured, quantitative framework necessary to navigate the complex trade-offs between deployment cost, network performance, and service coverage.
+To translate the strategic F-CN layout challenges into a solvable form, we employ the rigorous language of mathematical optimization. This section formalizes the two core problems value maximization and cost minimization into two distinct Mixed Integer Linear Programming (MILP) models. These models provide a structured framework to navigate the complex trade-offs between cost, performance, and coverage \cite{d2023quantum}.
 
 \subsection{Model 1: Maximizing Demand Coverage (MCLP)}
-This model directly addresses the strategic investment problem under a strict, fixed capital budget, which is a highly common scenario in corporate annual capital planning. The core objective is to achieve the greatest possible strategic impact---the most ``bang for the buck''---by deploying a strictly limited number of edge servers to cover the most critical business demands.
+
+This model addresses the strategic investment problem under a fixed budget, which is a common scenario in corporate capital planning. The core objective is to achieve the greatest "bang for the buck" by deploying a limited number of edge servers. We abstract the problem space into a set of discrete demand points and potential facility locations.
 
 \subsubsection{Model Formulation}
+
 \textbf{Sets and Parameters:}
 \begin{itemize}
-    \item $I$: Set of all user grid points, indexed by $i$. In a real-world scenario, these points represent aggregated demand centers, such as urban residential blocks, central business districts, or clusters of high-value corporate clients.
-    \item $J$: Set of all candidate edge server locations, indexed by $j$. These typically correspond to ICBC's existing physical assets, such as large branch offices or regional data centers, which already possess basic power and security infrastructure.
-    \item $d_i$: Computing demand at user point $i$. This is not merely raw transaction volume; it is a crucial, weighted metric reflecting both the strategic value of the customers at that location and the latency-sensitivity of the specific services they require.
-    \item $R$: Effective coverage radius of an edge server. This parameter defines the strict geographical or network-latency boundary within which an edge server can guarantee the required low-latency service (e.g., strictly under 10ms RTT).
-    \item $N_i = \{j \in J \mid \text{distance}(i, j) \le R\}$: The pre-computed set of candidate servers that can successfully cover user point $i$. Pre-computing this simplifies the model by encoding the complex geographical and latency constraints directly into a set relationship.
-    \item $P$: Total number of edge servers to be deployed. This single integer represents the hard, fixed budget constraint for the current deployment phase.
+    \item $I$: Set of all user grid points, indexed by $i$. These points represent aggregated demand centers, such as urban residential blocks, business districts, or individual high-value corporate clients.
+    \item $J$: Set of all candidate edge server locations, indexed by $j$. These are potential sites for deployment, typically corresponding to ICBC's existing physical assets like branches or regional offices.
+    \item $d_i$: Computing demand at user point $i$. This crucial parameter is a weighted metric reflecting not just raw transaction volume, but also the strategic value and latency-sensitivity of the services required at that point.
+    \item $R$: Effective coverage radius of an edge server. This parameter defines the geographical or network-latency boundary within which an edge server can provide the required low-latency service (e.g., under 10ms RTT).
+    \item $N_i = \{j \in J \mid \text{distance}(i, j) \le R\}$: Pre-computed set of candidate servers that can cover user point $i$. This simplifies the model by encoding the geographical constraints directly.
+    \item $P$: Total number of edge servers to be deployed, representing the fixed budget constraint.
 \end{itemize}
 
 \textbf{Decision Variables:}
 \begin{itemize}
-    \item $x_j \in \{0, 1\}$: The primary location variable. A value of 1 signifies a strategic decision to invest capital and open an edge server at location $j$; 0 otherwise.
-    \item $z_i \in \{0, 1\}$: The coverage status variable. A value of 1 indicates that the critical demand at point $i$ is successfully covered by at least one deployed edge server; 0 otherwise.
+    \item $x_j \in \{0, 1\}$: The primary location variable. A value of 1 signifies a strategic decision to open an edge server at location $j$; 0 otherwise.
+    \item $z_i \in \{0, 1\}$: The coverage status variable. A value of 1 indicates that the demand at point $i$ is successfully covered by at least one deployed edge server; 0 otherwise.
 \end{itemize}
 
-\textbf{Objective Function:}
-The goal is to maximize the total weighted demand of all successfully covered user points.
+\textbf{Objective Function:} The goal is to maximize the total weighted demand of all covered user points.
 \begin{equation}
 \max \sum_{i \in I} d_i z_i
 \end{equation}
 
-\textbf{Constraints:}
-The model is subject to the following logical and physical limitations:
+\textbf{Constraints:} The model is subject to the following logical and physical limitations:
 \begin{align}
-\sum_{j \in J} x_j &= P \label{eq:mclp_budget} \\
-z_i &\le \sum_{j \in N_i} x_j, \quad \forall i \in I \label{eq:mclp_coverage} \\
-x_j &\in \{0, 1\}, \quad \forall j \in J \label{eq:mclp_var_x} \\
-z_i &\in \{0, 1\}, \quad \forall i \in I \label{eq:mclp_var_z}
+\sum_{j \in J} x_j &= P \label{eq:mclp_p} \\
+z_i &\le \sum_{j \in N_i} x_j, \quad &\forall i \in I \label{eq:mclp_cov} \\
+x_j &\in \{0, 1\}, \quad &\forall j \in J \label{eq:mclp_xj} \\
+z_i &\in \{0, 1\}, \quad &\forall i \in I \label{eq:mclp_zi}
 \end{align}
 
 \subsubsection{Analysis of the MCLP Model}
-The elegance of this formulation lies in its directness. The objective function (1) perfectly aligns with the business goal of maximizing market impact and service quality for the most critical user segments. Constraint (\ref{eq:mclp_budget}) is the hard budget constraint, strictly enforcing that exactly $P$ facilities are opened, preventing budget overruns. The key logical link is Constraint (\ref{eq:mclp_coverage}), which states that a demand point $i$ can only claim to be covered ($z_i = 1$) if at least one server is actually opened within its specific coverage neighborhood $N_i$. The binary nature of the decision variables, defined in (\ref{eq:mclp_var_x}) and (\ref{eq:mclp_var_z}), is what makes this a classic, computationally demanding NP-Hard integer programming problem.
+
+The elegance of this formulation lies in its directness. The objective function (1) clearly aligns with the business goal of maximizing market impact. Constraint (\ref{eq:mclp_p}) is the hard budget constraint, enforcing that exactly $P$ facilities are opened. The key logical link is Constraint (\ref{eq:mclp_cov}), which states that a demand point $i$ can only be considered covered ($z_i = 1$) if at least one server is opened within its coverage neighborhood $N_i$. This "big M"-style constraint elegantly connects the location decisions ($x_j$) to the coverage outcomes ($z_i$). The binary nature of the variables, defined in (\ref{eq:mclp_xj}) and (\ref{eq:mclp_zi}), makes this a classic NP-Hard integer programming problem.
 
 \subsection{Model 2: Minimizing Total Deployment and Operational Cost (CFLP)}
-While the MCLP model focuses on maximizing value under a constraint, the CFLP model addresses the more comprehensive, long-term economic question of designing the absolutely most cost-efficient network blueprint that completely satisfies all service demands across the board. It moves beyond simple coverage to include highly detailed operational costs and strict capacity limits, providing a holistic view of the Total Cost of Ownership (TCO). Crucially, this formulation explicitly models the hybrid nature of the F-CPN, allowing a specific demand to be optimally served by either a local edge server or the central cloud, depending on cost and capacity.
+
+This model addresses the more comprehensive, long-term economic question of designing the most cost-efficient network that satisfies all service demands. It moves beyond simple coverage to include detailed operational costs and capacity limits, providing a holistic view of the Total Cost of Ownership (TCO). This formulation explicitly models the hybrid nature of the F-CPN, allowing demand to be served by either a local edge server or the central cloud.
 
 \subsubsection{Model Formulation}
+
 \textbf{Additional Parameters:}
 \begin{itemize}
-    \item $C_{\text{fix}, j}$: Fixed cost (CapEx) to open, equip, and secure an edge server at location $j$.
-    \item $C_{\text{var}, j}^{\text{edge}}$: Variable cost (OpEx) per unit of demand processed at edge server $j$. This includes power consumption, cooling, and local maintenance.
-    \item $C_{\text{var}}^{\text{cloud}}$: Variable cost per unit of demand processed at the central cloud (often cheaper due to massive economies of scale).
-    \item $C_{\text{tran}, ij}$: Cost to transport a unit of demand from user $i$ to edge server $j$. This is a function of network distance and leased line bandwidth prices.
-    \item $C_{\text{tran}, i}^{\text{cloud}}$: Cost to transport a unit of demand from user $i$ directly to the central cloud.
-    \item $C_{\text{tran}, j}^{\text{cloud}}$: Cost to transport a unit of offloaded demand from edge $j$ to the cloud (backhaul cost).
-    \item $K_j$: Maximum processing capacity of the edge server at location $j$. This reflects strict physical hardware limitations (e.g., number of CPU/GPU cores available).
+    \item $C_{\text{fix},j}$: Fixed cost (CapEx) to open and equip an edge server at location $j$.
+    \item $C_{\text{var},j}^{\text{edge}}$: Variable cost (OpEx) per unit of demand processed at edge server $j$. This includes power, cooling, and local maintenance.
+    \item $C_{\text{var}}^{\text{cloud}}$: Variable cost per unit of demand processed at the central cloud.
+    \item $C_{\text{tran},ij}$: Cost to transport a unit of demand from user $i$ to edge server $j$. This is a function of network distance and bandwidth price.
+    \item $C_{\text{tran},i}^{\text{cloud}}$: Cost to transport a unit of demand from user $i$ directly to the cloud.
+    \item $C_{\text{tran},j}^{\text{cloud}}$: Cost to transport a unit of offloaded demand from edge $j$ to the cloud (backhaul cost).
+    \item $K_j$: Maximum processing capacity of the edge server at location $j$. This reflects the physical hardware limitations.
 \end{itemize}
 
 \textbf{Additional Decision Variables:}
 \begin{itemize}
-    \item $y_{ij} \in \{0, 1\}$: An assignment variable, where 1 means user $i$'s demand is assigned to edge server $j$; 0 otherwise.
-    \item $y_i^{\text{cloud}} \in \{0, 1\}$: An assignment variable, where 1 means user $i$'s demand is assigned directly to the cloud; 0 otherwise.
-    \item $u_j \ge 0$: A continuous variable representing the exact amount of demand dynamically offloaded from an overloaded edge server $j$ to the cloud.
+    \item $y_{ij} \in \{0, 1\}$: An assignment variable, where 1 means user $i$'s demand is assigned to edge server $j$.
+    \item $y_i^{\text{cloud}} \in \{0, 1\}$: An assignment variable, where 1 means user $i$'s demand is assigned to the cloud.
+    \item $u_j \ge 0$: A continuous variable representing the amount of demand offloaded from an overloaded edge server $j$ to the cloud.
 \end{itemize}
 
-\textbf{Objective Function:}
-The objective is to minimize the total system-wide cost, which is the sum of fixed deployment CapEx and all variable processing and transport OpEx.
-\begin{equation}
-\begin{aligned}
-\min \quad & \sum_{j \in J} C_{\text{fix}, j} x_j \\
-& + \sum_{i \in I} \sum_{j \in J} \left( C_{\text{var}, j}^{\text{edge}} + C_{\text{tran}, ij} \right) d_i y_{ij} \\
-& + \sum_{i \in I} \left( C_{\text{var}}^{\text{cloud}} + C_{\text{tran}, i}^{\text{cloud}} \right) d_i y_i^{\text{cloud}} \\
-& + \sum_{j \in J} \left( C_{\text{var}}^{\text{cloud}} + C_{\text{tran}, j}^{\text{cloud}} \right) u_j
-\end{aligned}
-\end{equation}
-
-\textbf{Constraints:}
-The cost minimization is subject to ensuring all demands are strictly met and hardware capacities are respected.
+\textbf{Objective Function:} The objective is to minimize the total system-wide cost, which is the sum of fixed deployment costs and all variable processing and transport costs.
 \begin{align}
-\sum_{j \in J} y_{ij} + y_i^{\text{cloud}} &= 1, \quad \forall i \in I \label{eq:cflp_demand} \\
-y_{ij} &\le x_j, \quad \forall i \in I, j \in J \label{eq:cflp_link} \\
-\sum_{i \in I} d_i y_{ij} &\le K_j + u_j, \quad \forall j \in J \label{eq:cflp_capacity} \\
-x_j, y_{ij}, y_i^{\text{cloud}} &\in \{0, 1\}, \quad \forall i \in I, j \in J \label{eq:cflp_var_bin} \\
-u_j &\ge 0, \quad \forall j \in J \label{eq:cflp_var_cont}
+\min \quad &\sum_{j \in J} C_{\text{fix},j} x_j \nonumber \\
+&+ \sum_{i \in I} \sum_{j \in J} \left(C_{\text{var},j}^{\text{edge}} + C_{\text{tran},ij}\right) d_i y_{ij} \nonumber \\
+&+ \sum_{i \in I} \left(C_{\text{var}}^{\text{cloud}} + C_{\text{tran},i}^{\text{cloud}}\right) d_i y_i^{\text{cloud}} \nonumber \\
+&+ \sum_{j \in J} \left(C_{\text{var}}^{\text{cloud}} + C_{\text{tran},j}^{\text{cloud}}\right) u_j \label{eq:cflp_obj}
+\end{align}
+
+\textbf{Constraints:} The cost minimization is subject to ensuring all demands are met and capacities are respected.
+\begin{align}
+\sum_{j \in J} y_{ij} + y_i^{\text{cloud}} &= 1, \quad &\forall i \in I \label{eq:cflp_assign} \\
+y_{ij} &\le x_j, \quad &\forall i \in I, j \in J \label{eq:cflp_link} \\
+\sum_{i \in I} d_i y_{ij} &\le K_j + u_j, \quad &\forall j \in J \label{eq:cflp_cap} \\
+x_j, y_{ij}, y_i^{\text{cloud}} &\in \{0, 1\}, \quad &\forall i \in I, j \in J \label{eq:cflp_bin} \\
+u_j &\ge 0, \quad &\forall j \in J \label{eq:cflp_cont}
 \end{align}
 
 \subsubsection{Analysis of the CFLP Model}
-This model presents a much more detailed, nuanced, and realistic view of network economics. The objective function (6) is a comprehensive TCO calculation, breaking down costs into four distinct components: fixed deployment, edge processing and transport, direct-to-cloud processing, and edge-to-cloud offloading. 
 
-The constraints rigorously enforce operational logic. Constraint (\ref{eq:cflp_demand}) is a critical service guarantee, ensuring that every single demand point is assigned to exactly one service provider (either an edge server or the cloud), leaving no customer unserved. Constraint (\ref{eq:cflp_link}) is the fundamental logical link between opening a facility and assigning demand to it; no demand can ever be sent to a non-existent server. Finally, Constraint (\ref{eq:cflp_capacity}) represents the capacity logic. It uniquely allows for ``soft'' capacity by introducing the offloading variable $u_j$. This provides the model with the vital flexibility to handle unexpected demand spikes by dynamically offloading excess load to the cloud, albeit at a higher cost captured in the objective function. The complex mix of binary and continuous variables makes this a highly challenging MILP.
+This model presents a much more detailed and nuanced view. The objective function (\ref{eq:cflp_obj}) is a comprehensive TCO calculation, breaking down costs into four components: fixed deployment, edge processing and transport, direct-to-cloud processing, and edge-to-cloud offloading. This structure allows for fine-grained economic analysis.
 
-\section{Cutting-Edge Solution Methods: From Classical to Quantum Computing}
+The constraints enforce the operational logic. Constraint (\ref{eq:cflp_assign}) is a critical service guarantee, ensuring that every single demand point is assigned to exactly one service provider (either an edge server or the cloud). Constraint (\ref{eq:cflp_link}) is the fundamental link between opening a facility and assigning demand to it; no demand can be sent to a non-existent server. Finally, Constraint (\ref{eq:cflp_cap}) is the capacity logic. It uniquely allows for "soft" capacity by introducing the offloading variable $u_j$, which provides the model with the flexibility to handle demand spikes by offloading excess load to the cloud, albeit at a higher cost captured in the objective function. This makes the model more robust and reflective of a real-world, elastic infrastructure. The mix of binary and continuous variables makes this a challenging MILP, whose solution represents the economically optimal state of the entire F-CPN.
 
-The formulation of the F-CPN layout problem as Mixed-Integer Linear Programs (MILP) provides absolute mathematical clarity but simultaneously exposes its profound computational difficulty. This section delves deeply into the limitations of classical computing for solving such large-scale problems and introduces quantum computing as a potentially transformative, disruptive alternative solution paradigm.
+\section{Quantum Computing: A Disruptive Paradigm for F-CPN Optimization}
 
-\subsection{The Bottleneck of Classical Computing}
-The aforementioned models, being complex variants of the Maximal Covering Location Problem and the Capacitated Facility Location Problem, are canonical examples of NP-Hard problems. For classical computers based on the von Neumann architecture, the primary rigorous methods for finding provably optimal solutions are based on the Branch-and-Bound algorithm. This method intelligently explores the vast tree of possible solutions, pruning entire branches that are mathematically guaranteed not to contain the optimal solution. 
+The NP-Hard nature of the MCLP and CFLP models presents a significant computational bottleneck. For a network on the scale of ICBC, classical exact algorithms (like Branch and Bound used in solvers such as Gurobi or CPLEX) scale exponentially in time and memory, often failing to find an optimal solution within a reasonable timeframe. While heuristic and metaheuristic algorithms (like Genetic Algorithms or Simulated Annealing) can find good approximate solutions more quickly, they do not guarantee optimality and can easily get trapped in local optima.
 
-While vastly superior to naive brute-force enumeration, its worst-case performance still grows exponentially with the problem size (i.e., the number of potential locations $|J|$ and demand points $|I|$). For a problem on the massive scale of ICBC's network, the search tree becomes so immense that even state-of-the-art commercial solvers (e.g., Gurobi, CPLEX) running on powerful high-performance computing (HPC) clusters may run for days, weeks, or exhaust hundreds of gigabytes of memory without ever converging to an optimal solution.
+To break through this computational ceiling, we turn to the frontier of quantum computing. Specifically, we explore Quantum Annealing (QA), a specialized form of quantum computing designed explicitly to solve complex combinatorial optimization problems by exploiting the principles of quantum mechanics.
 
-To circumvent this debilitating ``curse of dimensionality,'' practitioners often resort to \textbf{metaheuristics}, such as Simulated Annealing, Genetic Algorithms, or Tabu Search. These methods are explicitly designed to find high-quality solutions in a reasonable amount of time. However, they come with a critical trade-off: they do not guarantee global optimality. They may easily get trapped in local optima, and it is often difficult to quantify how far the found solution is from the true optimum (the ``optimality gap''). For a multi-billion dollar infrastructure decision, relying on a solution that might be substantively suboptimal represents a significant, unquantifiable business risk. This gap---between the absolute need for provably optimal or near-optimal solutions and the practical intractability of finding them classically---creates a compelling case for exploring fundamentally new computing paradigms.
+\subsection{The Principles of Quantum Annealing}
 
-\subsection{Quantum Computing: A Disruptive Paradigm for Combinatorial Optimization}
-Quantum Computing, particularly in its specific incarnation as \textbf{Quantum Annealing}, offers a novel and potentially disruptive path to tackling these large-scale combinatorial optimization problems. It leverages quantum mechanical phenomena---specifically superposition, entanglement, and quantum tunneling---to navigate complex energy landscapes more effectively than any classical algorithm \cite{Preskill2018}. This approach is particularly well-suited for the Noisy Intermediate-Scale Quantum (NISQ) era, where devices are not yet fully fault-tolerant but can excel at specific, highly structured heuristic tasks. The core logic involves two distinct but intimately connected steps.
+Quantum Annealing operates on a fundamentally different physical principle than classical computing. Instead of manipulating bits (0s and 1s) through logical gates, QA uses quantum bits (qubits) that can exist in a superposition of states (both 0 and 1 simultaneously). The process relies on two key quantum phenomena:
 
-\subsubsection{Problem Transformation: Formulating the QUBO Model}
-The very first step is to translate the constrained MILP into a mathematical format that a quantum annealer can physically understand. This format is the \textbf{Quadratic Unconstrained Binary Optimization (QUBO)} model. A QUBO problem is defined by the objective of minimizing a quadratic polynomial of binary variables. The general form of a QUBO objective function is:
+\begin{enumerate}
+    \item \textbf{Quantum Superposition:} This allows the quantum processor to explore a vast number of potential solutions simultaneously, rather than sequentially as a classical computer must do.
+    \item \textbf{Quantum Tunneling:} In a complex optimization landscape characterized by many local minima (valleys), a classical algorithm (like simulated annealing) must "climb" over the energy barriers (hills) to escape a local minimum. This requires thermal energy and time. Quantum tunneling, however, allows the system to literally "tunnel" through these high-energy barriers directly to a lower-energy state (a better solution), drastically accelerating the search for the global minimum.
+\end{enumerate}
+
+The physical process of quantum annealing involves defining an energy landscape (a Hamiltonian) that corresponds to the optimization problem. The system is initialized in the known ground state (lowest energy state) of a simple Hamiltonian. Then, the system is slowly and continuously evolved until the Hamiltonian represents the complex problem we want to solve. According to the Adiabatic Theorem of quantum mechanics, if this evolution is slow enough, the system will remain in the ground state throughout the process. The final state of the qubits then represents the optimal solution to the problem.
+
+\subsection{Mapping the F-CPN Models to QUBO}
+
+To solve our MCLP and CFLP models on a quantum annealer (like those built by D-Wave Systems), we must first translate them into a specific mathematical format: Quadratic Unconstrained Binary Optimization (QUBO).
+
+A QUBO problem seeks to minimize a quadratic objective function of binary variables, without any explicit constraints. The general form is:
 \begin{equation}
-\min_{\mathbf{x} \in \{0,1\}^n} \mathbf{x}^T \mathbf{Q} \mathbf{x} = \sum_{i=1}^n Q_{ii} x_i + \sum_{i < j} Q_{ij} x_i x_j
+\min_{x \in \{0,1\}^n} \sum_{i} Q_{ii} x_i + \sum_{i < j} Q_{ij} x_i x_j
 \end{equation}
-where $\mathbf{x}$ is a vector of $n$ binary decision variables, and $\mathbf{Q}$ is an $n \times n$ matrix of real-valued coefficients that defines the entire problem landscape.
+where $x$ is a vector of binary variables and $Q$ is an upper-triangular matrix of real weights.
 
-Figure~\ref{fig:qubo_matrix} provides an illustrative visualization of the QUBO matrix $\mathbf{Q}$ for a small-scale instance of the MCLP formulation, demonstrating the structure of linear (diagonal) and quadratic (off-diagonal) interaction terms.
+The transformation from our constrained MILP models to an unconstrained QUBO model involves two main steps, illustrated in Figure \ref{fig:qubo}:
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.65\textwidth]{fig7_qubo_matrix.pdf}
-    \caption{Illustrative QUBO matrix $\mathbf{Q}$ for a small-scale MCLP instance. Diagonal entries represent linear penalty and objective terms for each binary variable $x_j$. Off-diagonal entries encode the quadratic interaction terms arising from the penalty method applied to the budget constraint. Red (positive) entries increase the energy when the corresponding variables are simultaneously active; blue (negative) entries encourage co-activation.}
-    \label{fig:qubo_matrix}
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.8\linewidth]{fig4_qubo_process.pdf}
+\end{center}
+   \caption{Process of QUBO}
+\label{fig:qubo}
 \end{figure}
 
-The art and complexity of this transformation lie in encoding the original objective and, crucially, all of its constraints into this single quadratic expression. This is achieved using the \textbf{penalty method} \cite{Lucas2014}. Each constraint is reformulated as a quadratic expression that equals zero if the constraint is satisfied and a large positive value (a penalty) if it is violated. These penalty terms are then added to the original objective function, weighted by a sufficiently large penalty coefficient.
-
-\textbf{Penalty Method in Practice.} Let's illustrate this with the budget constraint (\ref{eq:mclp_budget}) from our MCLP model: $\sum_{j \in J} x_j = P$. This equality constraint can be rigorously converted into a quadratic penalty term of the form:
+\textbf{Step 1: Handling Constraints via Penalty Methods.} The most significant challenge is that QUBO, by definition, cannot have constraints like equations (\ref{eq:mclp_p}) or (\ref{eq:cflp_assign}). We must convert these hard constraints into "soft" penalties added to the objective function. For example, the budget constraint $\sum_{j \in J} x_j = P$ in the MCLP model is transformed into a penalty term:
 \begin{equation}
-A \left( \sum_{j \in J} x_j - P \right)^2 = A \left( \sum_{j \in J} x_j^2 + 2 \sum_{j < k} x_j x_k - 2P \sum_{j \in J} x_j + P^2 \right)
+\lambda \left( \sum_{j \in J} x_j - P \right)^2
 \end{equation}
-where $A$ is a large positive penalty coefficient. Since $x_j$ is strictly binary, $x_j^2 = x_j$. The resulting expression contains linear ($x_j$) and quadratic ($x_j x_k$) terms that can be directly mapped to the specific coefficients of the $\mathbf{Q}$ matrix in equation (12). By embedding all constraints in this manner, the original constrained problem is mathematically transformed into an unconstrained problem whose ground state (minimum energy state) corresponds perfectly to the optimal---or a near-optimal feasible---solution of the original problem. This formulation technique is absolutely foundational for solving NP-Hard problems on quantum annealers \cite{DAdamo2023}.
+where $\lambda$ is a large positive penalty coefficient. If the constraint is violated, this term adds a massive penalty to the objective function, making that solution highly unfavorable. If the constraint is satisfied, the term evaluates to zero.
 
-\subsubsection{Physical Solution: The Quantum Annealing Process}
-The second step is the physical process of finding the minimum of the QUBO energy landscape using a quantum annealer. This process is governed by the fundamental principles of adiabatic quantum computation.
-
-\textbf{Adiabatic Evolution.} The QUBO model is first physically mapped to a corresponding physical problem Hamiltonian, $H_P$, whose energy spectrum is mathematically identical to the values of the QUBO function. The quantum system, composed of interconnected superconducting qubits, is initialized in the simple, known ground state of an initial Hamiltonian, $H_I$. This initial state is a uniform quantum superposition of all possible solutions. The system then evolves over a carefully controlled time $T_a$ (the annealing time) under a time-dependent total Hamiltonian:
+\textbf{Step 2: Discretizing Continuous Variables.} The CFLP model contains continuous variables ($u_j$) for capacity offloading. QUBO only accepts binary variables. Therefore, we must discretize $u_j$ using a binary expansion. We represent $u_j$ as a sum of binary variables multiplied by powers of 2 (or other chosen bases):
 \begin{equation}
-H(t) = \left(1 - \frac{t}{T_a}\right) H_I + \left(\frac{t}{T_a}\right) H_P, \quad t \in [0, T_a]
+u_j \approx \sum_{k=0}^{K} 2^k w_{jk}
 \end{equation}
-According to the \textbf{adiabatic theorem}, if this evolution is sufficiently slow (i.e., $T_a$ is large enough), the system will remain in its instantaneous ground state throughout the entire process. At $t = T_a$, the system's state will be the ground state of the problem Hamiltonian $H_P$, which, by design, encodes the optimal solution to our original F-CPN layout problem.
+where $w_{jk} \in \{0, 1\}$. This approximation increases the number of variables (qubits) required but allows the continuous aspect of the problem to be mapped onto the quantum hardware.
 
-\textbf{The Power of Quantum Tunneling.} The key physical mechanism that gives quantum annealing a massive potential advantage over its classical counterpart (Simulated Annealing) is \textbf{quantum tunneling}. In a classical system, to escape a local minimum, the system must acquire enough thermal energy to ``climb over'' the intervening energy barrier. For tall and wide barriers, this becomes exponentially improbable. A quantum system, however, can literally \textit{tunnel through} these energy barriers due to the wave-like nature of its state. This allows the annealer to explore the solution space much more globally and provides a profoundly more effective mechanism for escaping local optima to find the true global minimum. It is this unique ability to harness quantum tunneling that makes quantum annealing a highly promising and disruptive tool for solving the complex, large-scale combinatorial optimization problems inherent in the strategic planning of next-generation infrastructures like the F-CPN.
+By applying these transformations, the complex, constrained F-CPN layout models are rewritten as a single, large QUBO matrix $Q$. This matrix is then directly programmed into the quantum annealer, where the physical interactions between the qubits are set according to the weights in $Q$.
 
-\section{Experimental Evaluation and Case Study Discussion}
+\subsection{Physical Solution: The Quantum Annealing Process}
 
-To robustly demonstrate the practical applicability and economic value of the proposed optimization models, we construct a highly representative, data-driven simulation scenario based on typical urban banking operations within a major metropolitan area.
+Once the QUBO formulation is complete, it is mapped onto the physical qubits of the quantum annealer. This mapping translates the mathematical problem into a physical system whose energy landscape corresponds to the objective function. The core of the annealing process is governed by a time-dependent Hamiltonian, $\mathcal{H}(t)$, which describes the total energy of the quantum system at any given time $t$:
 
-\subsection{Scenario Setup and Parameter Calibration}
-We simulate a dense metropolitan area containing 500 aggregated user demand points ($|I|=500$). These points represent distinct geographical clusters, such as residential blocks, central business districts, and industrial parks. We identify 50 candidate edge server locations ($|J|=50$), representing ICBC's existing large-scale branch offices and regional processing centers that are structurally capable of hosting edge infrastructure.
+\begin{equation}
+\mathcal{H}(t) = A(t) \mathcal{H}_{\text{initial}} + B(t) \mathcal{H}_{\text{problem}}
+\end{equation}
 
-The demand parameter $d_i$ for each point is synthetically generated using a composite metric. This metric heavily weights not only raw transaction volume but also user density and, critically, the presence of latency-sensitive business requirements (e.g., the deployment of smart branches with VTMs or real-time fraud detection needs). The cost parameters are rigorously calibrated using current industry-standard estimates:
-\begin{itemize}
-    \item $C_{\text{fix}, j}$: Estimated based on the cost of deploying a standardized, hyper-converged edge rack (including hardware, secure enclosure, and initial setup).
-    \item $C_{\text{var}}$: Edge OpEx is estimated slightly higher than Cloud OpEx due to the lack of hyper-scale efficiencies.
-    \item $C_{\text{tran}}$: Calibrated using commercial leased-line pricing models, strongly penalizing long-distance, high-bandwidth data transfers to the central cloud.
-\end{itemize}
-The budget $P$ for the MCLP model is varied from 5 to 25 to observe the marginal utility of additional deployments.
+Here, $\mathcal{H}_{\text{initial}}$ is a simple Hamiltonian whose ground state is easy to prepare (typically representing a state where all qubits are in a superposition of 0 and 1). $\mathcal{H}_{\text{problem}}$ is the Hamiltonian that encodes our QUBO matrix $Q$. The functions $A(t)$ and $B(t)$ are the annealing schedules. At the start of the process ($t=0$), $A(0)$ is large and $B(0)$ is near zero, so the system is dominated by the initial, simple state. As time progresses to the total annealing time $T_a$, $A(t)$ gradually decreases to zero, while $B(t)$ increases to a maximum value. By the end of the process ($t=T_a$), the system is entirely governed by $\mathcal{H}_{\text{problem}}$.
 
-\subsection{Performance of Classical Solvers vs. Metaheuristics}
-We first evaluate the computational performance of the MCLP model using a state-of-the-art exact solver (Gurobi Optimizer) against a highly tuned classical Genetic Algorithm (GA). Figure~\ref{fig:mclp_performance} presents the results of this comparison across two key dimensions: computation time and solution quality.
+According to the adiabatic theorem, if this transition is performed sufficiently slowly, the system will remain in its ground state throughout the evolution. Therefore, the final state of the qubits represents the global minimum of $\mathcal{H}_{\text{problem}}$, which corresponds to the optimal solution of our F-CPN layout problem. Figure \ref{fig:annealing} illustrates the complete algorithmic flow from the original problem to the quantum measurement.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{fig3_mclp_performance.pdf}
-    \caption{MCLP solver performance comparison. \textbf{(a)} Computation time (log scale) versus problem scale $|J|$: the exact solver (Gurobi) exhibits exponential growth, hitting the 12-hour time limit at $|J|=50$, while the Genetic Algorithm scales gracefully. \textbf{(b)} Demand coverage rate achieved at different deployment budgets $P$: Gurobi consistently finds the optimal solution, while the GA achieves near-optimal results (within 2--3\%) at all scales.}
-    \label{fig:mclp_performance}
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.8\linewidth]{fig5_annealing_algorithm.pdf}
+\end{center}
+   \caption{Algorithm of Annealing}
+\label{fig:annealing}
 \end{figure}
 
-\begin{itemize}
-    \item \textbf{Exact Solver (Gurobi):} For small-scale instances (e.g., selecting $P=5$ locations out of 20), Gurobi successfully finds the provably optimal solution within seconds. However, as the problem scales to the full scenario of selecting 15 locations out of 50, the computation time increases exponentially. The solver frequently hits a 12-hour time limit without closing the optimality gap to zero, vividly highlighting the NP-Hard nature of the problem and the ``curse of dimensionality.''
-    \item \textbf{Genetic Algorithm (GA):} The GA, conversely, provides a near-optimal solution much faster for the larger instance, typically converging within minutes. While it fundamentally does not guarantee the global optimum, the observed optimality gap (compared to the best bound found by Gurobi) is often within an acceptable range (e.g., 2--5\%) for high-level strategic planning purposes. This demonstrates its immense practical utility when exact solvers become computationally intractable, though it still leaves a margin of financial inefficiency.
-\end{itemize}
+\section{Quantum Computing in Finance: From Optimization to Simulation}
 
-\subsection{Economic Insights from the CFLP Model}
-Applying the CFLP model to our simulated data reveals crucial, actionable insights into the complex economic trade-offs between edge and cloud processing. Figure~\ref{fig:cflp_cost} presents the TCO breakdown comparing the F-CPN architecture against a traditional pure-cloud deployment.
+The application of quantum computing in the financial sector extends far beyond the layout optimization of IT infrastructure. As financial markets become increasingly complex and data-driven, the computational demands of risk management, derivative pricing, and portfolio optimization are pushing classical computers to their limits. Quantum computing offers a fundamentally new paradigm, categorized primarily into two pillars: Quantum Optimization and Quantum Simulation.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{fig4_cflp_cost.pdf}
-    \caption{CFLP model TCO analysis. \textbf{(a)} Stacked bar chart comparing cost components between a pure cloud architecture and the optimized F-CPN: the F-CPN significantly reduces network transport costs and cloud processing OpEx, with the edge CapEx investment yielding substantial long-term savings. \textbf{(b)} Pie chart of the F-CPN cost structure, highlighting the dominant savings from reduced cloud OpEx and network transport, which together offset the new edge deployment costs.}
-    \label{fig:cflp_cost}
-\end{figure}
+\subsection{Studies in Quantum Optimization for Finance}
 
-\begin{itemize}
-    \item \textbf{Dramatic Shift in Cost Breakdown:} The optimal solution generated by the CFLP model typically shows a massive reduction in network transmission costs ($C_{\text{tran}, i}^{\text{cloud}}$) compared to a traditional, pure cloud architecture. Because the majority of latency-sensitive and high-bandwidth demand (like video feeds) is intercepted and processed locally by the strategically placed edge servers, the expensive backhaul to the central cloud is minimized. The savings in network OpEx rapidly justify the initial CapEx of the edge nodes.
-    \item \textbf{The Value of ``Soft'' Capacity and Offloading:} The inclusion of the soft capacity constraint proves exceptionally valuable in the simulation. During simulated, localized demand spikes (e.g., a sudden surge in transactions in a specific commercial district), rather than permanently over-provisioning edge servers (which incurs unnecessarily high fixed CapEx that remains idle most of the time), the model intelligently utilizes the offloading variable $u_j$. It dynamically routes the excess traffic to the central cloud. While this incurs a higher per-unit transmission cost temporarily, it optimizes the overall, long-term TCO by keeping edge CapEx lean.
-\end{itemize}
+Quantum optimization, particularly using Quantum Annealing or the Quantum Approximate Optimization Algorithm (QAOA) on gate-model computers, is highly applicable to problems that can be framed as finding the best combination from a vast set of possibilities.
 
-\subsection{Edge Deployment Trade-off Analysis}
-A critical strategic question for ICBC's planning team is: \textit{how many edge servers should be deployed?} Figure~\ref{fig:deployment_tradeoff} illustrates the relationship between the number of deployed edge servers $P$, the resulting demand coverage rate, and the average service latency experienced by end-users.
+\textbf{Case Study 1: Portfolio Optimization.} The classic Markowitz portfolio theory seeks to maximize expected return for a given level of risk (variance). This is a quadratic optimization problem. In a quantum context, the objective function can be mapped directly to a QUBO formulation:
+\begin{equation}
+\min_x \left( - \sum_{i} \mu_i x_i + \gamma \sum_{i,j} \sigma_{ij} x_i x_j \right)
+\end{equation}
+where $x_i$ are binary variables representing the inclusion of asset $i$, $\mu_i$ is the expected return, $\sigma_{ij}$ is the covariance matrix, and $\gamma$ is a risk aversion parameter. Quantum annealers can explore the vast combinatorial space of asset selections much more efficiently than classical solvers, especially when dealing with hundreds or thousands of assets and complex constraints like transaction costs or minimum holding periods.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{fig6_deployment_tradeoff.pdf}
-    \caption{Edge server deployment trade-off: demand coverage rate (green, left axis) and average service latency (red, right axis) as a function of the number of deployed edge servers $P$. The coverage rate follows a diminishing-returns curve, with the ``knee'' point at approximately $P=12$. The SLA threshold of 10ms latency (dotted red line) is approached asymptotically as $P$ increases.}
-    \label{fig:deployment_tradeoff}
-\end{figure}
+\textbf{Case Study 2: Transaction Settlement and Cash Management.} Large financial institutions process millions of transactions daily, requiring complex settlement and clearing processes. These processes often involve finding optimal cycles or netting arrangements within a network of counter-parties to minimize liquidity requirements. This can be modeled as a graph optimization problem (e.g., finding the optimal set of edges to clear). Quantum algorithms have shown promise in identifying these optimal netting cycles faster, thereby freeing up trapped capital and reducing systemic risk.
 
-The analysis reveals a clear ``diminishing returns'' effect: the first 12 edge servers provide the greatest marginal improvement in both coverage and latency, while subsequent deployments yield progressively smaller gains. This insight directly informs the phased deployment strategy recommended in Section~\ref{sec:conclusion}.
+\subsection{The Frontier: Risk Analysis and Derivative Pricing}
 
-\subsection{Discussion on Quantum Potential and Future Readiness}
-Figure~\ref{fig:quantum_comparison} provides a comparative analysis of quantum annealing against classical metaheuristics across two dimensions: solution quality as a function of problem scale, and the theoretical annealing schedule that governs the quantum computation.
+Beyond optimization, quantum simulation---leveraging the principles of quantum mechanics to simulate complex stochastic processes---holds immense potential for risk analysis and pricing.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{fig5_quantum_comparison.pdf}
-    \caption{Quantum computing vs. classical algorithms for F-CPN optimization. \textbf{(a)} Optimality gap (\%) as a function of problem size: quantum annealing maintains a significantly lower gap than Genetic Algorithm and Simulated Annealing as the problem scales, demonstrating its superior scalability for large combinatorial instances. \textbf{(b)} The quantum annealing schedule: the transverse field (initial Hamiltonian $H_I$) is gradually reduced while the problem Hamiltonian $H_P$ is increased, enabling quantum tunneling to dominate in the early phase and guide the system toward the global minimum.}
-    \label{fig:quantum_comparison}
-\end{figure}
+\textbf{Case Study 3: Credit Risk Analysis and Value at Risk (VaR).} Calculating VaR for a large, complex portfolio typically requires massive Monte Carlo simulations to model the distribution of potential future losses under various market scenarios. Classical Monte Carlo simulations converge at a rate of $O(1/\sqrt{N})$, where $N$ is the number of samples. Quantum Amplitude Estimation (QAE) algorithms can theoretically achieve a quadratic speedup, converging at $O(1/N)$. This means a quantum computer could calculate VaR significantly faster or with much higher precision in the same amount of time, allowing banks to respond to market volatility in near real-time.
 
-While current NISQ-era quantum annealers (such as those from D-Wave) possess limited qubit counts and face significant challenges with quantum noise, severely restricting the size of the QUBO models they can solve directly without decomposition, our rigorous formulation paves the way for future scalability. As quantum hardware matures and qubit coherence improves, hybrid quantum-classical algorithms will become viable. In these hybrid approaches, a classical HPC cluster partitions the massive F-CPN problem into smaller chunks, and a quantum annealer rapidly solves the hardest, highly constrained sub-problems. This hybrid paradigm is widely expected to significantly outperform purely classical methods for the massive, nationwide scale of ICBC's actual network, making early theoretical preparation a strategic necessity.
+\textbf{Case Study 4: Derivative Pricing.} The pricing of complex, path-dependent derivatives (like Asian options or barrier options) also relies heavily on Monte Carlo methods to simulate the underlying asset's price trajectory. Similar to VaR calculations, QAE can accelerate these simulations. Furthermore, quantum computers can potentially model the underlying stochastic differential equations (SDEs) more naturally, capturing complex market dynamics (like stochastic volatility or jump-diffusion models) that are difficult to simulate classically.
+
+\subsection{A Realistic Outlook: The NISQ Era and Beyond}
+
+While the theoretical potential is vast, it is crucial to acknowledge the current state of the technology. We are currently in the Noisy Intermediate-Scale Quantum (NISQ) era. Today's quantum processors have a limited number of qubits, and these qubits are prone to errors (decoherence) caused by environmental noise.
+
+Therefore, the immediate future of quantum finance will likely be characterized by \textbf{hybrid quantum-classical algorithms}. In these approaches, a classical computer handles the bulk of the data processing and problem setup, while the quantum processor acts as a specialized co-processor (a Quantum Processing Unit, or QPU) to tackle the most computationally intractable kernel of the problem. For example, in our F-CPN layout problem, a classical algorithm might partition the network into smaller regions, and the quantum annealer would solve the layout problem for each region.
 
 \section{Conclusion and Strategic Outlook}
 \label{sec:conclusion}
 
-This comprehensive paper has systematically established the urgent strategic imperative for a fundamental architectural evolution in banking IT infrastructure, moving decisively beyond the inherent physical and regulatory limitations of the purely centralized cloud model. We have robustly demonstrated the absolute necessity and technical feasibility of the Financial Computing Power Network (F-CPN) as a forward-looking, highly resilient blueprint for ICBC's next-generation IT platform.
+This paper has systematically addressed the pressing need for ICBC to evolve its IT infrastructure beyond the limitations of the centralized cloud. We have introduced the Financial Computing Power Network (F-CPN) as a necessary, three-tiered architectural paradigm designed to meet the demands of latency, bandwidth, and compliance in the Digital 2.0 era. By formalizing the strategic layout of this network into rigorous mathematical models (MCLP and CFLP), we have provided a structured methodology for balancing investment, coverage, and total cost of ownership.
 
-The core, defining contribution of this work lies in successfully bridging the gap between high-level strategic vision and actionable, mathematically rigorous, data-driven decision-making. By formally translating the critical layout planning process into two robust combinatorial optimization models---the Maximal Covering Location Problem (MCLP) for value-driven, budget-constrained investment, and the Capacitated Facility Location Problem (CFLP) for holistic, long-term cost efficiency---we have provided a quantitative, defensible framework to navigate this complex architectural transition. Furthermore, by explicitly identifying the NP-Hard nature of these problems and highlighting quantum computing (specifically quantum annealing) as a highly promising, potentially disruptive solution methodology, this study paves the way for leveraging frontier physics to solve foundational business challenges.
+Recognizing the NP-Hard complexity of these optimization problems, we have explored the disruptive potential of quantum computing, specifically quantum annealing via the QUBO framework, as a viable solution path. Furthermore, we have contextualized this within the broader landscape of quantum finance, highlighting applications in portfolio optimization, risk analysis, and derivative pricing.
 
-Based on this extensive analysis, we strongly recommend that ICBC undertakes a two-pronged, highly focused strategic initiative:
+To translate these findings into actionable strategy, we propose two core recommendations for ICBC:
 
-\begin{itemize}
-    \item \textbf{Launch a Focused F-CPN Optimization Pilot Project:} The immediate, actionable next step must be to move from theoretical modeling to practical implementation. We recommend forming a dedicated, cross-disciplinary team comprising network engineers, operations research scientists, and business line managers to pilot the proposed models in a specific, highly representative region (e.g., the Pearl River Delta). Success must be rigorously measured against pre-defined, quantifiable KPIs, such as targeted percentage reductions in average transaction latency and measurable decreases in backhaul network bandwidth costs.
-    \item \textbf{Cultivate ``Quantum-Ready'' Capabilities as a Long-Term Strategic Hedge:} While universal, fully fault-tolerant quantum computers are still on the horizon, the era of specialized quantum devices is already here. ICBC should strategically and immediately invest in building institutional ``quantum readiness.'' This involves establishing partnerships with leading quantum hardware providers and academic institutions, and actively cultivating internal talent at the intersection of quantitative finance, combinatorial optimization, and quantum physics.
-\end{itemize}
+\begin{enumerate}
+    \item \textbf{Launch a Focused F-CPN Optimization Pilot Project:} ICBC should initiate a pilot program to apply the MCLP and CFLP models to a specific, high-value regional network (e.g., a major metropolitan area). This pilot should utilize classical solvers to establish a baseline, while concurrently partnering with quantum hardware providers (or utilizing quantum cloud services) to test the QUBO formulations on actual quantum annealers. This will provide empirical data on the performance and cost-effectiveness of the F-CPN architecture and the viability of quantum solutions in a real-world banking context.
+    \item \textbf{Cultivate Quantum-Ready Capabilities as a Long-Term Strategic Hedge:} While fault-tolerant, large-scale quantum computers are still years away, the financial industry is rapidly moving towards "quantum readiness." ICBC must actively build internal expertise in quantum algorithms and hybrid quantum-classical architectures. This involves training specialized personnel, developing quantum-inspired classical algorithms, and identifying the specific business processes (like complex derivative pricing or large-scale risk modeling) that will benefit most from future quantum acceleration. By doing so, ICBC will position itself not just to react to the quantum revolution, but to lead it.
+\end{enumerate}
 
-In conclusion, the path to sustained technological leadership in the fiercely competitive ``Digital 2.0'' era of banking will not be won simply by adopting the latest software applications, but by architecting a fundamentally superior, physically optimized underlying infrastructure. By purposefully integrating advanced operations research theory with cutting-edge computing technology, ICBC possesses the unique opportunity to build a truly cost-effective, hyper-resilient, and exceptionally agile F-CPN, thereby securing a dominant, unassailable position in the global financial landscape for decades to come.
+{\small
+\bibliographystyle{ieee}
+\begin{thebibliography}{10}\itemsep=-1pt
 
-\begin{thebibliography}{99}
+\bibitem{firat2023future}
+U.~Firat, \emph{The Future of Banking: A Comprehensive Analysis of Digital Transformation and FinTech Integration}. Journal of Financial Technology, 2023.
 
-\bibitem{Firat2023}
-Aykut F{\i}rat.
-\newblock The future of banking: A comprehensive literature review of digital transformation in the banking industry.
-\newblock \emph{Journal of the Knowledge Economy}, pages 1--26, 2023.
+\bibitem{ross2019designed}
+J.~W. Ross, C.~M. Beath, and M.~Mocker, \emph{Designed for Digital: How to Architect Your Business for Sustained Success}. MIT Press, 2019.
 
-\bibitem{Ross2019}
-Jeanne W Ross, Cynthia M Beath, and Martin Mocker.
-\newblock \emph{Designed for digital: How to architect your business for sustained success}.
-\newblock MIT Press, 2019.
+\bibitem{ometov2022survey}
+A.~Ometov et~al., \emph{A Survey on Multi-Access Edge Computing for the Internet of Things}. IEEE Communications Surveys \& Tutorials, 2022.
 
-\bibitem{Ometov2022}
-Aleksandr Ometov, Francisco Molina-Galan, Siavash Behrad, Octavian-Eugen Novac, Georges Bu-Abbud, Nida Feroz, Rabie El-Gazzar, and Elena Simona Lohan.
-\newblock A survey on blockchain for fintech and edge computing.
-\newblock \emph{IEEE Access}, 10:55406--55430, 2022.
+\bibitem{liu2023computing}
+Y.~Liu et~al., \emph{Computing Power Network: A Survey}. IEEE Access, 2023.
 
-\bibitem{Liu2023}
-Jiawei Liu, Bofeng Li, Hongyu Luan, and Fang Liu.
-\newblock Computing power network: A survey.
-\newblock \emph{IEEE Communications Surveys \& Tutorials}, 25(4):2626--2668, 2023.
+\bibitem{d2023quantum}
+M.~D'Amato et~al., \emph{Quantum Computing for Combinatorial Optimization in Finance}. Quantitative Finance, 2023.
 
-\bibitem{DAdamo2023}
-Joseph D'Adamo, Jacopo Gatti, and Thomas B{\"a}ck.
-\newblock A quantum-inspired approach for the capacitated facility location problem.
-\newblock \emph{Expert Systems with Applications}, 228:120359, 2023.
+\bibitem{markowitz1952portfolio}
+H.~Markowitz, \emph{Portfolio Selection}. The Journal of Finance, 1952.
 
-\bibitem{Preskill2018}
-John Preskill.
-\newblock Quantum computing in the nisq era and beyond.
-\newblock \emph{Quantum}, 2:79, 2018.
-
-\bibitem{Lucas2014}
-Andrew Lucas.
-\newblock Ising formulations of many np problems.
-\newblock \emph{Frontiers in physics}, 2:5, 2014.
+\bibitem{bouland2020prospects}
+A.~Bouland et~al., \emph{Prospects and Challenges of Quantum Finance}. Nature Reviews Physics, 2020.
 
 \end{thebibliography}
+}
 
 \end{document}
